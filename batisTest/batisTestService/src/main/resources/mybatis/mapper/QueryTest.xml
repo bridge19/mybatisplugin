@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="tf56.batistest.dao.QueryTestDao" >
+	<resultMap id="querytestFieldMap" type="tf56.batistest.domain.QueryTest">
+	        <result column="queryTestId" property="queryTestId" jdbcType="BIGINT" />			<!-- 主键 -->
+	        <result column="queryName" property="queryName" jdbcType="VARCHAR" />			<!-- 名字 -->
+	        <result column="queryValue" property="queryValue" jdbcType="VARCHAR" />			<!-- 值 -->
+	        <result column="inputMan" property="inputMan" jdbcType="INTEGER" />			<!-- 输入人 -->
+	        <result column="inputDate" property="inputDate" jdbcType="TIMESTAMP" />			<!-- 输入时间 -->
+	        <result column="updateDate" property="updateDate" jdbcType="TIMESTAMP" />			<!-- 更新时间 -->
+	    </resultMap>
+	
+	<!-- 新增 -->
+	<insert id="insertQueryTest" parameterType="tf56.batistest.domain.QueryTest" useGeneratedKeys="true" keyProperty="queryTestId">
+		INSERT INTO QueryTest
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+        		   <if test="queryName != null" >queryName,</if>
+				   <if test="queryValue != null" >queryValue,</if>
+				   <if test="inputMan != null" >inputMan,</if>
+				   <if test="inputDate != null" >inputDate,</if>
+				   <if test="updateDate != null" >updateDate,</if>
+				</trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides="," >
+				   <if test="queryName != null" >#{queryName,jdbcType=VARCHAR},</if>
+				   <if test="queryValue != null" >#{queryValue,jdbcType=VARCHAR},</if>
+				   <if test="inputMan != null" >#{inputMan,jdbcType=INTEGER},</if>
+				   <if test="inputDate != null" >#{inputDate,jdbcType=TIMESTAMP},</if>
+				   <if test="updateDate != null" >#{updateDate,jdbcType=TIMESTAMP},</if>
+				</trim>
+	</insert>
+	
+	<!-- 更新 -->
+	<update id="updateQueryTest" parameterType="tf56.batistest.domain.QueryTest">
+		UPDATE QueryTest 
+		<set>
+				   <if test="queryName != null" >queryName = #{queryName,jdbcType=VARCHAR},</if>
+				   <if test="queryValue != null" >queryValue = #{queryValue,jdbcType=VARCHAR},</if>
+				   <if test="inputMan != null" >inputMan = #{inputMan,jdbcType=INTEGER},</if>
+				   <if test="inputDate != null" >inputDate = #{inputDate,jdbcType=TIMESTAMP},</if>
+				   <if test="updateDate != null" >updateDate = #{updateDate,jdbcType=TIMESTAMP},</if>
+				</set>
+		WHERE queryTestId = #{queryTestId,jdbcType=BIGINT}
+	</update>
+	
+	<!-- 主键查询 -->
+	<select id="getQueryTestByPrimaryKey" parameterType="java.lang.Long" resultMap="querytestFieldMap">
+		SELECT 
+		 <include refid="Base_Column_List" />
+    	FROM QueryTest
+		WHERE queryTestId = #{queryTestId,jdbcType=BIGINT}
+	</select>
+	
+	<select id="listQueryTest" parameterType="tf56.batistest.domain.QueryTest" resultMap="querytestFieldMap">
+	    SELECT
+	    <include refid="Base_Column_List" />
+	    FROM QueryTest
+	    <where>
+	    	 			    <if test="queryName != null" > AND queryName = #{queryName,jdbcType=VARCHAR}</if>
+						    <if test="queryValue != null" > AND queryValue = #{queryValue,jdbcType=VARCHAR}</if>
+						    <if test="inputMan != null" > AND inputMan = #{inputMan,jdbcType=INTEGER}</if>
+						    <if test="inputDate != null" > AND inputDate = #{inputDate,jdbcType=TIMESTAMP}</if>
+						    <if test="updateDate != null" > AND updateDate = #{updateDate,jdbcType=TIMESTAMP}</if>
+				    </where>
+	  </select>
+	  
+	  <!--根据主键删除 -->
+	  <delete id="deleteQueryTestByPrimaryKey" parameterType="java.lang.Long">
+	    DELETE FROM QueryTest
+	    WHERE queryTestId = #{queryTestId,jdbcType=BIGINT}
+	  </delete>
+	  
+	  <!--根据对象删除 -->
+	  <delete id="deleteQueryTestByProperty" parameterType="tf56.batistest.domain.QueryTest">
+	    DELETE FROM QueryTest
+	    <where>
+	    				   <if test="queryName != null" > AND queryName = #{queryName,jdbcType=VARCHAR}</if>
+						   <if test="queryValue != null" > AND queryValue = #{queryValue,jdbcType=VARCHAR}</if>
+						   <if test="inputMan != null" > AND inputMan = #{inputMan,jdbcType=INTEGER}</if>
+						   <if test="inputDate != null" > AND inputDate = #{inputDate,jdbcType=TIMESTAMP}</if>
+						   <if test="updateDate != null" > AND updateDate = #{updateDate,jdbcType=TIMESTAMP}</if>
+				    </where>
+	  </delete>
+	  
+	
+	<sql id="Base_Column_List">
+		queryTestId,queryName,queryValue,inputMan,inputDate,updateDate	</sql>
+</mapper>

@@ -1,0 +1,3 @@
+visitLogDubboFilter=tf56.batistest.util.dubbo.VisitLogDubboFilter
+exceptionFilter=tf56.batistest.util.dubbo.DubboExceptionFilter
+interfaceLogDubboFilter=tf56.batistest.util.dubbo.InterfaceLogDubboFilter
